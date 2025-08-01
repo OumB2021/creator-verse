@@ -11,8 +11,7 @@ app.get("/", async (req, res) => {
     console.log(data);
     res.send(data);
   } catch (error) {
-    console.log(error);
-    res.send(error);
+    res.status(500).send({ erorr: error.message });
   }
 });
 
