@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,16 +41,14 @@ const Navbar = () => {
     <nav 
       className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'backdrop-blur-md bg-white/80 shadow-sm' 
-          : 'bg-white/95'
+          ? 'backdrop-blur-md bg-white/80 dark:bg-gray-900/80 shadow-sm' 
+          : 'bg-white/95 dark:bg-gray-900/95'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="text-xl font-semibold text-gray-800">
-              CreatorVerse
-            </Link>
+            <Logo />
           </div>
           
           {/* Desktop Navigation */}
@@ -59,8 +59,8 @@ const Navbar = () => {
                 to={link.path}
                 className={`${
                   isActive(link.path)
-                    ? 'border-indigo-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    ? 'border-indigo-500 text-gray-900 dark:text-white'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200`}
               >
                 {link.name}
@@ -68,22 +68,25 @@ const Navbar = () => {
             ))}
           </div>
           
-          {/* Mobile menu button */}
-          <div className="-mr-2 flex items-center sm:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors duration-200"
-              aria-controls="mobile-menu"
-              aria-expanded={isOpen}
-            >
-              <span className="sr-only">{isOpen ? 'Close' : 'Open'} main menu</span>
-              {isOpen ? (
-                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
+          <div className="flex items-center">
+            <ThemeToggle />
+            {/* Mobile menu button */}
+            <div className="-mr-2 flex items-center sm:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                type="button"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors duration-200"
+                aria-controls="mobile-menu"
+                aria-expanded={isOpen}
+              >
+                <span className="sr-only">{isOpen ? 'Close' : 'Open'} main menu</span>
+                {isOpen ? (
+                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -97,8 +100,8 @@ const Navbar = () => {
               to={link.path}
               className={`${
                 isActive(link.path)
-                  ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
-                  : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'
+                  ? 'bg-indigo-50 dark:bg-gray-800 border-indigo-500 text-indigo-700 dark:text-indigo-300'
+                  : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
               } block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200`}
             >
               {link.name}
