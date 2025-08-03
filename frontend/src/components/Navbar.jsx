@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import Logo from './Logo';
-import ThemeToggle from './ThemeToggle';
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Creators', path: '/creators' },
-    { name: 'Add Creator', path: '/add-creator' },
+    { name: "Home", path: "/" },
+    { name: "Creators", path: "/creators" },
+    { name: "Add Creator", path: "/add-creator" },
   ];
 
   // Close mobile menu when route changes
@@ -20,89 +19,92 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Add scroll effect for frosted glass
+  // Add scroll effect for shadow
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const isActive = (path) => {
-    // Special case for home to ensure exact match
-    if (path === '/') {
+    if (path === "/") {
       return location.pathname === path;
     }
     return location.pathname.startsWith(path);
   };
 
   return (
-    <nav 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'backdrop-blur-md bg-white/80 dark:bg-gray-900/80 shadow-sm' 
-          : 'bg-white/95 dark:bg-gray-900/95'
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${
+        isScrolled ? "shadow-sm" : "shadow-none"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-16 px-10">
           <div className="flex-shrink-0 flex items-center">
             <Logo />
           </div>
-          
+
           {/* Desktop Navigation */}
-          <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <div className="hidden md:flex md:items-center md:space-x-8">
             {navLinks.map((link) => (
               <Link
-                key={link.path}
+                key={link.name}
                 to={link.path}
                 className={`${
                   isActive(link.path)
-                    ? 'border-indigo-500 text-gray-900 dark:text-white'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
-                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200`}
+                    ? "text-zinc-800 font-medium"
+                    : "text-zinc-600 hover:text-zinc-800"
+                } px-3 py-2 text-sm transition-colors duration-200 relative group`}
               >
                 {link.name}
+                <span
+                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-zinc-800 transform scale-x-0 transition-transform duration-200 ${
+                    isActive(link.path)
+                      ? "scale-x-100"
+                      : "group-hover:scale-x-75"
+                  }`}
+                />
               </Link>
             ))}
           </div>
-          
-          <div className="flex items-center">
-            <ThemeToggle />
-            {/* Mobile menu button */}
-            <div className="-mr-2 flex items-center sm:hidden">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors duration-200"
-                aria-controls="mobile-menu"
-                aria-expanded={isOpen}
-              >
-                <span className="sr-only">{isOpen ? 'Close' : 'Open'} main menu</span>
-                {isOpen ? (
-                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                ) : (
-                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                )}
-              </button>
-            </div>
+
+          {/* Mobile menu button */}
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-zinc-600 hover:text-zinc-800 focus:outline-none"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              {isOpen ? (
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
           </div>
         </div>
       </div>
-      
+
       {/* Mobile menu, show/hide based on menu state. */}
-      <div className={`sm:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <div className="pt-2 pb-3 space-y-1">
+      <div
+        className={`${
+          isOpen ? "block" : "hidden"
+        } md:hidden bg-white border-t border-zinc-100`}
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {navLinks.map((link) => (
             <Link
-              key={`mobile-${link.path}`}
+              key={link.name}
               to={link.path}
               className={`${
                 isActive(link.path)
-                  ? 'bg-indigo-50 dark:bg-gray-800 border-indigo-500 text-indigo-700 dark:text-indigo-300'
-                  : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
-              } block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200`}
+                  ? "bg-zinc-50 text-zinc-800 font-medium"
+                  : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-800"
+              } block px-3 py-2 rounded-md text-base`}
             >
               {link.name}
             </Link>
