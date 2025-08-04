@@ -121,47 +121,7 @@ const Home = () => {
               <PlusIcon className="h-5 w-5" />
             </Link>
           </motion.div>
-
-          {/* <motion.div
-            className="mt-16 flex flex-wrap justify-center gap-6 opacity-80"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 0.8, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span className="text-sm text-gray-300">10,000+ Creators</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <span className="text-sm text-gray-300">50+ Categories</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-              <span className="text-sm text-gray-300">24/7 Support</span>
-            </div>
-          </motion.div> */}
         </motion.div>
-
-        {/* <motion.div
-          className="absolute bottom-8 transform -translate-x-1/2 flex flex-col items-center "
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          <span className="text-sm text-gray-400 mb-2">Scroll to explore</span>
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center p-1">
-            <motion.div
-              className="w-1 h-2 bg-gray-400 rounded-full"
-              animate={{ y: [0, 8, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: "easeInOut",
-              }}
-            />
-          </div>
-        </motion.div> */}
       </div>
     </div>
   );

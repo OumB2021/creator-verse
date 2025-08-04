@@ -37,9 +37,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${
-        isScrolled ? "shadow-sm" : "shadow-none"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "backdrop-blur-md bg-white/80 dark:bg-gray-900/80 shadow-sm"
+          : "backdrop-blur-sm bg-white/60 dark:bg-gray-900/60"
+      } border-b border-white/10`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 px-10">
@@ -93,7 +95,7 @@ const Navbar = () => {
       <div
         className={`${
           isOpen ? "block" : "hidden"
-        } md:hidden bg-white border-t border-zinc-100`}
+        } md:hidden backdrop-blur-md bg-white/95 dark:bg-gray-900/95 border-t border-white/10`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {navLinks.map((link) => (
