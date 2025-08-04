@@ -1,4 +1,5 @@
 import Creator from "../components/Creator";
+import { useState, useEffect } from "react";
 
 // Dummy creators data
 const dummyCreators = [
@@ -58,6 +59,53 @@ const dummyCreators = [
 ];
 
 const ShowCreators = () => {
+  const [creators, setCreators] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCreators = async () => {
+      setLoading(true);
+      try {
+        console.log(
+          "Fetching creators from:",
+          "http://localhost:4000/creators"
+        );
+        const response = await fetch("http://localhost:4000/creators");
+
+        console.log("Response status:", response.status);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Error response:", errorText);
+          throw new Error(
+            `Server responded with ${response.status}: ${errorText}`
+          );
+        }
+
+        const data = await response.json();
+        console.log("Received data:", data);
+
+        if (!Array.isArray(data)) {
+          console.error("Expected an array but got:", typeof data);
+          throw new Error(
+            "Expected an array of creators but got something else"
+          );
+        }
+
+        setCreators(data);
+      } catch (error) {
+        console.error("Error in fetchCreators:", error);
+        // Fallback to dummy data in case of error
+        console.log("Falling back to dummy data");
+        setCreators(dummyCreators);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCreators();
+  }, []);
+
   return (
     <div className="mt-20 py-12 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

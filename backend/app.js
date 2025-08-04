@@ -1,17 +1,28 @@
 import express from "express";
+import cors from "cors";
 import { supabase } from "./supabase_db.js";
 
 const app = express();
 const PORT = 4000;
 
-app.get("/", async (req, res) => {
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
+
+app.get("/creators", async (req, res) => {
   try {
     const { data, error } = await supabase.from("creators").select();
-    if (error) throw error;
-    console.log(data);
-    res.send(data);
+    if (error) {
+      console.error("Supabase error fetching creators:", error);
+      return res.status(502).send({ message: "Upstream data source error" });
+    }
+    res.status(200).json(data);
   } catch (error) {
-    res.status(500).send({ erorr: error.message });
+    res
+      .status(500)
+      .send({ message: "Failed to fetch creators", erorr: error.message });
   }
 });
 

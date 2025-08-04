@@ -5,7 +5,7 @@ const Creator = ({ name, url, description, imageUrl, onEdit }) => {
     "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
 
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] h-80 group">
+    <div className="relative rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] h-80 group">
       {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0">
         <img
@@ -17,7 +17,7 @@ const Creator = ({ name, url, description, imageUrl, onEdit }) => {
             e.target.src = defaultImage;
           }}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300" />
+        <div className="absolute inset-0 bg-black bg-opacity-60 group-hover:bg-opacity-40 transition-all duration-300" />
       </div>
 
       {/* Content */}
