@@ -1,4 +1,5 @@
 import Creator from "../components/Creator";
+import CreatorSkeleton from "../components/CreatorSkeleton";
 import { useState, useEffect } from "react";
 
 // Dummy creators data
@@ -62,17 +63,16 @@ const ShowCreators = () => {
   const [creators, setCreators] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const handleEdit = (id) => {
+    // Handle edit functionality here
+    console.log("Edit creator with id:", id);
+  };
+
   useEffect(() => {
     const fetchCreators = async () => {
       setLoading(true);
       try {
-        console.log(
-          "Fetching creators from:",
-          "http://localhost:4000/creators"
-        );
         const response = await fetch("http://localhost:4000/creators");
-
-        console.log("Response status:", response.status);
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -83,7 +83,6 @@ const ShowCreators = () => {
         }
 
         const data = await response.json();
-        console.log("Received data:", data);
 
         if (!Array.isArray(data)) {
           console.error("Expected an array but got:", typeof data);
@@ -95,9 +94,6 @@ const ShowCreators = () => {
         setCreators(data);
       } catch (error) {
         console.error("Error in fetchCreators:", error);
-        // Fallback to dummy data in case of error
-        console.log("Falling back to dummy data");
-        setCreators(dummyCreators);
       } finally {
         setLoading(false);
       }
@@ -119,15 +115,29 @@ const ShowCreators = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {dummyCreators.map((creator) => (
-            <Creator
-              key={creator.id}
-              name={creator.name}
-              description={creator.description}
-              url={creator.url}
-              imageUrl={creator.imageUrl}
-            />
-          ))}
+          {loading ? (
+            // Show skeleton loaders
+            Array(6)
+              .fill()
+              .map((_, index) => <CreatorSkeleton key={`skeleton-${index}`} />)
+          ) : creators.length > 0 ? (
+            // Show actual creator cards
+            dummyCreators.map((creator) => (
+              <Creator
+                key={creator.id}
+                name={creator.name}
+                description={creator.description}
+                url={creator.url}
+                imageUrl={creator.imageUrl}
+                onEdit={() => handleEdit(creator.id)}
+              />
+            ))
+          ) : (
+            // Show message if no creators found
+            <div className="col-span-full text-center py-10">
+              <p className="text-gray-600">No creators found.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
