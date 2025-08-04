@@ -1,5 +1,6 @@
 import Creator from "../components/Creator";
 import CreatorSkeleton from "../components/CreatorSkeleton";
+import EmptyCreators from "../components/EmptyCreators";
 import { useState, useEffect } from "react";
 
 // Dummy creators data
@@ -55,7 +56,6 @@ const dummyCreators = [
     description:
       "Graphic designer and illustrator. Creates bold, colorful designs that tell a story and capture attention.",
     url: "https://example.com/creator/taylor-kim",
-    // No imageUrl to demonstrate the placeholder
   },
 ];
 
@@ -66,6 +66,11 @@ const ShowCreators = () => {
   const handleEdit = (id) => {
     // Handle edit functionality here
     console.log("Edit creator with id:", id);
+  };
+
+  const handleAddCreator = () => {
+    // Handle add creator functionality
+    console.log("Add new creator");
   };
 
   useEffect(() => {
@@ -105,40 +110,49 @@ const ShowCreators = () => {
   return (
     <div className="mt-20 py-12 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Our Talented Creators
-          </h1>
-          <p className="text-xl text-gray-600">
-            Discover and connect with amazing creators from around the world
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {loading ? (
-            // Show skeleton loaders
-            Array(6)
-              .fill()
-              .map((_, index) => <CreatorSkeleton key={`skeleton-${index}`} />)
-          ) : creators.length > 0 ? (
-            // Show actual creator cards
-            dummyCreators.map((creator) => (
-              <Creator
-                key={creator.id}
-                name={creator.name}
-                description={creator.description}
-                url={creator.url}
-                imageUrl={creator.imageUrl}
-                onEdit={() => handleEdit(creator.id)}
-              />
-            ))
-          ) : (
-            // Show message if no creators found
-            <div className="col-span-full text-center py-10">
-              <p className="text-gray-600">No creators found.</p>
+        {loading ? (
+          // Show skeleton loaders with header
+          <>
+            <div className="text-center mb-12 animate-pulse">
+              <div className="h-10 bg-gray-200 rounded w-1/3 mx-auto mb-4"></div>
+              <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto"></div>
             </div>
-          )}
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array(6)
+                .fill()
+                .map((_, index) => (
+                  <CreatorSkeleton key={`skeleton-${index}`} />
+                ))}
+            </div>
+          </>
+        ) : creators.length > 0 ? (
+          // Show actual content with header
+          <>
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                Our Talented Creators
+              </h1>
+              <p className="text-xl text-gray-600">
+                Discover and connect with amazing creators from around the world
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {dummyCreators.map((creator) => (
+                <Creator
+                  key={creator.id}
+                  name={creator.name}
+                  description={creator.description}
+                  url={creator.url}
+                  imageUrl={creator.imageUrl}
+                  onEdit={() => handleEdit(creator.id)}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          // Show empty state with add creator button
+          <EmptyCreators onAddCreator={handleAddCreator} />
+        )}
       </div>
     </div>
   );
