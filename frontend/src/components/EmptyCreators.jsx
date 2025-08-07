@@ -22,14 +22,16 @@ const useOnClickOutside = (ref, handler) => {
   }, [ref, handler]);
 };
 
-const EmptyCreators = ({ onAddCreator }) => {
+const resetCreator = {
+  name: "",
+  url: "",
+  description: "",
+  imageUrl: "",
+};
+
+const EmptyCreators = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    url: "",
-    description: "",
-    imageUrl: "",
-  });
+  const [formData, setFormData] = useState(resetCreator);
 
   const dialogRef = useRef(null);
 
@@ -56,15 +58,26 @@ const EmptyCreators = ({ onAddCreator }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAddCreator(formData);
-    setFormData({
-      name: "",
-      url: "",
-      description: "",
-      imageUrl: "",
-    });
+    try {
+      const response = await fetch("http://localhost:4000/creators", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to add creator");
+      }
+
+      const { message } = await response.json();
+      console.log(message);
+    } catch (error) {
+      console.error("Error adding creator:", error);
+    }
+    setFormData(resetCreator);
     setIsOpen(false);
   };
   return (

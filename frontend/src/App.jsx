@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import ShowCreators from "./pages/show-creators";
 import AddCreator from "./pages/add-creator";
-import ViewCreator from "./pages/view-creators";
+import ViewCreator from "./pages/view-creator";
 import EditCreator from "./pages/edit-creator";
 import Home from "./pages/home";
 import NotFound from "./pages/not-found";

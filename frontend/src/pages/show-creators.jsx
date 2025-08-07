@@ -137,7 +137,7 @@ const ShowCreators = () => {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {dummyCreators.map((creator) => (
+              {creators.map((creator) => (
                 <Creator
                   key={creator.id}
                   name={creator.name}
@@ -151,7 +151,7 @@ const ShowCreators = () => {
           </>
         ) : (
           // Show empty state with add creator button
-          <EmptyCreators onAddCreator={handleAddCreator} />
+          <EmptyCreators />
         )}
       </div>
     </div>

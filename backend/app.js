@@ -29,10 +29,21 @@ app.get("/creators", async (req, res) => {
 });
 
 app.post("/creators", async (req, res) => {
-  const data = req.body;
-
-  console.log("data received", data);
-  res.status(201).send("data received successfully");
+  try {
+    const data = req.body;
+    const { error } = await supabase.from("creators").insert(data);
+    if (error) {
+      console.error("Supabase error inserting creator:", error);
+      return res.status(502).send({ message: "Upstream data source error" });
+    }
+    res
+      .status(201)
+      .json({ message: "Creator inserted successfully", data: data });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Failed to insert creator", error: error.message });
+  }
 });
 
 app.listen(PORT, () => {
