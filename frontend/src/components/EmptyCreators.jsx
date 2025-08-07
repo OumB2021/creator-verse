@@ -1,6 +1,8 @@
 import { PlusCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import { Toaster, toast } from "sonner";
+import { useCreators } from "../context/CreatorsContext";
 
 // Custom hook to handle clicks outside of an element
 const useOnClickOutside = (ref, handler) => {
@@ -32,6 +34,7 @@ const resetCreator = {
 const EmptyCreators = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState(resetCreator);
+  const { refreshCreators } = useCreators();
 
   const dialogRef = useRef(null);
 
@@ -68,20 +71,28 @@ const EmptyCreators = () => {
         },
         body: JSON.stringify(formData),
       });
+      
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error("Failed to add creator");
+        throw new Error(data.message || "Failed to add creator");
       }
 
-      const { message } = await response.json();
-      console.log(message);
+      // Show success toast with server message
+      toast.success(data.message || "Creator added successfully!");
+      setFormData(resetCreator);
+      setIsOpen(false);
+      // Refresh the creators list to show the new creator
+      refreshCreators();
     } catch (error) {
+      // Show error toast
+      toast.error(error.message || "An error occurred while adding the creator");
       console.error("Error adding creator:", error);
     }
-    setFormData(resetCreator);
-    setIsOpen(false);
   };
   return (
     <>
+      <Toaster position="bottom-right" expand={true} richColors />
       <motion.div
         className="flex flex-col items-center justify-center py-16 px-4 text-center"
         initial={{ opacity: 0, y: 20 }}
