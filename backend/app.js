@@ -11,6 +11,8 @@ app.use(
   })
 );
 
+app.use(express.json());
+
 app.get("/creators", async (req, res) => {
   try {
     const { data, error } = await supabase.from("creators").select();
@@ -24,6 +26,13 @@ app.get("/creators", async (req, res) => {
       .status(500)
       .send({ message: "Failed to fetch creators", erorr: error.message });
   }
+});
+
+app.post("/creators", async (req, res) => {
+  const data = req.body;
+
+  console.log("data received", data);
+  res.status(201).send("data received successfully");
 });
 
 app.listen(PORT, () => {
