@@ -72,6 +72,40 @@ app.get("/creators/:id", async (req, res) => {
   }
 });
 
+app.delete("/creators/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({ message: "Creator ID is required" });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("creators")
+      .delete()
+      .eq("id", id)
+      .select();
+
+    if (error) {
+      console.error("Supabase error deleting user with ID:", error);
+      return res.status(502).send({ message: "Upstream data source error" });
+    }
+
+    if (!data) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+
+    res.status(200).send({ message: "User deleted successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        message: "Failed to delete creator by ID",
+        error: error.message,
+      });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

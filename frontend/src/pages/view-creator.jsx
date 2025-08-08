@@ -1,15 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import {
-  Loader2,
-  Trash2,
-  Edit,
-  X,
-  ArrowBigLeft,
-  ArrowLeft,
-} from "lucide-react";
+import { Loader2, Trash2, Edit } from "lucide-react";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
 
 // Custom hook to handle clicks outside of an element
 const useOnClickOutside = (ref, handler) => {
@@ -286,6 +278,49 @@ const ViewCreator = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div
+            ref={deleteDialogRef}
+            className="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
+          >
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Delete Creator
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete <strong>{creator?.name}</strong>?
+              This action cannot be undone.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => setShowDeleteDialog(false)}
+                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                disabled={isDeleting}
+              >
+                {isDeleting ? (
+                  <span className="flex items-center">
+                    <Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4" />
+                    Deleting...
+                  </span>
+                ) : (
+                  "Delete"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
