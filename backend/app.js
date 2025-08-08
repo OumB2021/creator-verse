@@ -46,6 +46,32 @@ app.post("/creators", async (req, res) => {
   }
 });
 
+app.get("/creators/:id", async (req, res) => {
+  const id = await req.params.id;
+  if (!id) {
+    return res.status(400).send({ message: "Creator ID is required" });
+  }
+  try {
+    const { data, error } = await supabase
+      .from("creators")
+      .select()
+      .eq("id", id)
+      .single();
+    if (error) {
+      console.error("Supabase error fetching creator by ID:", error);
+      return res.status(502).send({ message: "Upstream data source error" });
+    }
+    if (!data) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Failed to fetch creator by ID", error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -71,9 +71,9 @@ const EmptyCreators = () => {
         },
         body: JSON.stringify(formData),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.message || "Failed to add creator");
       }
@@ -86,7 +86,9 @@ const EmptyCreators = () => {
       refreshCreators();
     } catch (error) {
       // Show error toast
-      toast.error(error.message || "An error occurred while adding the creator");
+      toast.error(
+        error.message || "An error occurred while adding the creator"
+      );
       console.error("Error adding creator:", error);
     }
   };
@@ -94,7 +96,7 @@ const EmptyCreators = () => {
     <>
       <Toaster position="bottom-right" expand={true} richColors />
       <motion.div
-        className="flex flex-col items-center justify-center py-16 px-4 text-center"
+        className="flex flex-col items-center justify-center py-16 px-4 text-center min-h-screen"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useCreators } from "../context/CreatorsContext";
+import { Loader2 } from "lucide-react";
 
 const resetCreator = {
   name: "",
@@ -165,7 +166,11 @@ const AddCreator = () => {
                   isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                 }`}
               >
-                {isSubmitting ? "Adding..." : "Add Creator"}
+                {isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Add Creator"
+                )}
               </button>
             </div>
           </form>

@@ -44,6 +44,7 @@ const ShowCreators = () => {
               {creators.map((creator) => (
                 <Creator
                   key={creator.id}
+                  id={creator.id}
                   name={creator.name}
                   description={creator.description}
                   url={creator.url}
