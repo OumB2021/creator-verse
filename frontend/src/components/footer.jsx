@@ -10,7 +10,7 @@ const Footer = () => {
           </p>
           <div className="flex space-x-2">
             <a
-              href="https://github.com/oumarcreatorverse"
+              href="https://github.com/OumB2021"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-400 hover:text-white transition-colors"
@@ -19,7 +19,7 @@ const Footer = () => {
               <GitHubLogoIcon className="w-5 h-5" />
             </a>
             <a
-              href="https://github.com/oumarcreatorverse"
+              href="https://www.linkedin.com/in/oumar-barry-ab8000239/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-400 hover:text-white transition-colors"
