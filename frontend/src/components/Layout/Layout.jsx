@@ -23,16 +23,7 @@ const Layout = () => {
   return (
     <div className="min-h-screen bg-white text-zinc-800 flex flex-col relative overflow-hidden">
       {/* Subtle animated background */}
-      <div 
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(244, 244, 245, 0.8) 0%, transparent 70%)',
-          ...gradientPosition,
-          transition: 'background-position 0.1s ease-out',
-          zIndex: 0,
-        }}
-      />
-      
+
       <div className="relative z-10">
         <Navbar />
         <main className="flex-grow">

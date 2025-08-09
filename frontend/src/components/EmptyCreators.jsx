@@ -96,7 +96,7 @@ const EmptyCreators = () => {
     <>
       <Toaster position="bottom-right" expand={true} richColors />
       <motion.div
-        className="flex flex-col items-center justify-center py-16 px-4 text-center min-h-screen"
+        className="flex flex-col items-center justify-center py-16 px-4 text-center "
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

@@ -7,7 +7,7 @@ const ShowCreators = () => {
   const { creators, loading } = useCreators();
 
   return (
-    <div className="mt-20 py-12 bg-gray-50 min-h-screen">
+    <div className="mt-20 py-12 bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {loading ? (
           // Show skeleton loaders with header
