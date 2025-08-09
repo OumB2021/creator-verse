@@ -53,7 +53,7 @@ const EditCreator = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/creators/${id}/edit`,
+        `https://creator-verse.onrender.com/creators/${id}/edit`,
         {
           method: "PUT",
           headers: {

@@ -9,7 +9,7 @@ export const CreatorsProvider = ({ children }) => {
   const fetchCreators = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/creators");
+      const response = await fetch("https://creator-verse.onrender.com/creators");
 
       if (!response.ok) {
         const errorText = await response.text();

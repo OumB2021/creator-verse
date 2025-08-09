@@ -50,7 +50,7 @@ const ViewCreator = () => {
   useEffect(() => {
     const fetchCreator = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/creators/${id}`);
+        const response = await fetch(`https://creator-verse.onrender.com/creators/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch creator");
         }
@@ -74,7 +74,7 @@ const ViewCreator = () => {
     setShowDeleteDialog(false);
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://localhost:4000/creators/${id}`, {
+      const response = await fetch(`https://creator-verse.onrender.com/creators/${id}`, {
         method: "DELETE",
       });
 
