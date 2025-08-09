@@ -1,14 +1,17 @@
 import { Globe, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const Creator = ({ id, name, url, description, imageUrl, onEdit }) => {
+const Creator = ({ id, name, url, description, imageUrl }) => {
   const navigate = useNavigate();
 
+  const handleEdit = (id) => {
+    navigate(`/creators/${id}/edit`);
+  };
   const handleView = (e) => {
     e.stopPropagation();
-    console.log("from handleView", name);
     navigate(`/creators/${id}`);
   };
+
   const defaultImage =
     "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
 
@@ -49,7 +52,7 @@ const Creator = ({ id, name, url, description, imageUrl, onEdit }) => {
 
           <div className="flex space-x-2">
             <button
-              onClick={onEdit}
+              onClick={() => handleEdit(id)}
               className="flex items-center justify-center w-10 h-10 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 backdrop-blur-sm transition-all"
               aria-label="Edit creator"
             >

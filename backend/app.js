@@ -72,6 +72,17 @@ app.get("/creators/:id", async (req, res) => {
   }
 });
 
+app.put("/creators/:id/edit", async (req, res) => {
+  const { id } = req.params;
+  const received = req.body;
+
+  if (!id) {
+    return res.status(400).send({ message: "Creator ID is required" });
+  }
+
+  console.log("values received", received);
+});
+
 app.delete("/creators/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -97,12 +108,10 @@ app.delete("/creators/:id", async (req, res) => {
 
     res.status(200).send({ message: "User deleted successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        message: "Failed to delete creator by ID",
-        error: error.message,
-      });
+    res.status(500).send({
+      message: "Failed to delete creator by ID",
+      error: error.message,
+    });
   }
 });
 

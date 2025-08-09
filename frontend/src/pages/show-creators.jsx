@@ -6,11 +6,6 @@ import { useCreators } from "../context/CreatorsContext";
 const ShowCreators = () => {
   const { creators, loading } = useCreators();
 
-  const handleEdit = (id) => {
-    // Handle edit functionality here
-    console.log("Edit creator with id:", id);
-  };
-
   return (
     <div className="mt-20 py-12 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,7 +44,6 @@ const ShowCreators = () => {
                   description={creator.description}
                   url={creator.url}
                   imageUrl={creator.imageUrl}
-                  onEdit={() => handleEdit(creator.id)}
                 />
               ))}
             </div>
