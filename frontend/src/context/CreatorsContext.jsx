@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CreatorsContext = createContext();
 
@@ -9,7 +9,9 @@ export const CreatorsProvider = ({ children }) => {
   const fetchCreators = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://creator-verse.onrender.com/creators");
+      const response = await fetch(
+        "https://creator-verse.onrender.com/creators"
+      );
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -23,9 +25,7 @@ export const CreatorsProvider = ({ children }) => {
 
       if (!Array.isArray(data)) {
         console.error("Expected an array but got:", typeof data);
-        throw new Error(
-          "Expected an array of creators but got something else"
-        );
+        throw new Error("Expected an array of creators but got something else");
       }
 
       setCreators(data);
@@ -42,7 +42,9 @@ export const CreatorsProvider = ({ children }) => {
   }, []);
 
   return (
-    <CreatorsContext.Provider value={{ creators, loading, refreshCreators: fetchCreators }}>
+    <CreatorsContext.Provider
+      value={{ creators, loading, refreshCreators: fetchCreators }}
+    >
       {children}
     </CreatorsContext.Provider>
   );
@@ -51,7 +53,7 @@ export const CreatorsProvider = ({ children }) => {
 export const useCreators = () => {
   const context = useContext(CreatorsContext);
   if (!context) {
-    throw new Error('useCreators must be used within a CreatorsProvider');
+    throw new Error("useCreators must be used within a CreatorsProvider");
   }
   return context;
 };
