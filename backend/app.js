@@ -80,7 +80,34 @@ app.put("/creators/:id/edit", async (req, res) => {
     return res.status(400).send({ message: "Creator ID is required" });
   }
 
-  console.log("values received", received);
+  try {
+    const { data, error } = await supabase
+      .from("creators")
+      .update({
+        name: received.name,
+        description: received.description,
+        url: received.url,
+        imageUrl: received.imageUrl,
+      })
+      .eq("id", id)
+      .select();
+
+    if (error) {
+      console.error("Supabase error updating creator", error);
+      return res.status(502).send({ message: "Failed to update the creator" });
+    }
+
+    if (!data) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+
+    res.status(200).send({ message: "User updated successfully" });
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to update creator by ID",
+      error: error.message,
+    });
+  }
 });
 
 app.delete("/creators/:id", async (req, res) => {
